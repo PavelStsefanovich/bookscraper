@@ -1,0 +1,22 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pylint = "*"
+black = "*"
+rope = "*"
+
+[packages]
+bs4 = "*"
+requests = "*"
+pyinstaller = "*"
+pyhtml = "*"
+"ruamel.yaml" = "*"
+
+[requires]
+python_version = "3.7"
+
+[pipenv]
+allow_prereleases = true
