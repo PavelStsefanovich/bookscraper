@@ -19,6 +19,14 @@ def regex_parser(line, regex_parsing_list):
                 return (m[0], regex['html_args'], hr)
             if re.match(r'.*match\[1\].*', regex['match']):
                 return (m[1], regex['html_args'], hr)
+            if re.match(r'.*match\[2\].*', regex['match']):
+                return (m[2], regex['html_args'], hr)
+            if re.match(r'.*match\[3\].*', regex['match']):
+                return (m[3], regex['html_args'], hr)
+            if re.match(r'.*match\[4\].*', regex['match']):
+                return (m[4], regex['html_args'], hr)
+            if re.match(r'.*match\[5\].*', regex['match']):
+                return (m[5], regex['html_args'], hr)
             # more regex options here
 
     return '', {'tag': 'p'}, None
@@ -31,7 +39,7 @@ def generate_html_element(tag='p', text=None, div=False, div_style=None, **attib
     if attibutes:
         html_tag = html_tag(**attibutes)
 
-    if text or tag == 'p': 
+    if text or tag == 'p':
         html_tag = html_tag(text.strip())
 
     if div:
@@ -135,7 +143,7 @@ def generate_html_head(title, stylesheet):
 
 def dump_html(html, input_file_path, mobile=False):
     output_file_split = os.path.split(input_file_path)
-    
+
     if mobile:
         out_file = output_file_split[1].replace('.txt','') + ' (mobile).html'
     else:
@@ -143,7 +151,7 @@ def dump_html(html, input_file_path, mobile=False):
 
     out_file_path = os.path.join(output_file_split[0], out_file)
     print(f"Saving html into file: '{out_file_path}'")
-    
+
     with open(out_file_path,'w', encoding="utf-8") as book:
         book.write(html.render())
 
@@ -154,7 +162,7 @@ def main(main_config):
     regex_parsing_list = main_config['parser_config'].get('regex_parsing_list')
     if not regex_parsing_list:
         regex_parsing_list = {}
-    
+
     ## html body
     body = generate_html_body(input_file_path, regex_parsing_list)
 
