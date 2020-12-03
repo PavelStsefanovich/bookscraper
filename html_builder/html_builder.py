@@ -155,15 +155,18 @@ def dump_html(html, input_file_path, mobile=False):
     with open(out_file_path,'w', encoding="utf-8") as book:
         book.write(html.render())
 
+    return out_file_path
+
 
 def main(main_config):
-    print('Generating html')
+    output_files = []
     input_file_path = main_config['scraper_output_file']
     regex_parsing_list = main_config['parser_config'].get('regex_parsing_list')
     if not regex_parsing_list:
         regex_parsing_list = {}
 
     ## html body
+    print('Generating html body')
     body = generate_html_body(input_file_path, regex_parsing_list)
 
     ## normal html
@@ -171,14 +174,16 @@ def main(main_config):
     book_title = re.sub(r'\.\w+$', '', os.path.split(input_file_path)[1])
     head = generate_html_head(book_title, main_config['stylesheet'])
     html = pyhtml.html(head, body)
-    dump_html(html, input_file_path)
+    output_files.append(dump_html(html, input_file_path))
 
     ## mobile-friendly html
     print('Generating html head (mobile)')
     book_title = book_title + ' (mobile)'
     head = generate_html_head(book_title, main_config['stylesheet_mobile'])
     html = pyhtml.html(head, body)
-    dump_html(html, input_file_path, mobile=True)
+    output_files.append(dump_html(html, input_file_path, mobile=True))
+
+    return output_files
 
 
 

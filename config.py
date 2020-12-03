@@ -5,6 +5,7 @@ from ruamel.yaml import YAML
 
 ######## FUNCTIONS ########################################
 def parse_cmdargs(cmdargs):
+    mandatory_args = ['url']
     yaml=YAML(typ='safe')
     mainconfig_filepath = cmdargs['params_file']
     if not os.path.isabs(mainconfig_filepath):
@@ -20,7 +21,10 @@ def parse_cmdargs(cmdargs):
         if cmdargs[argument]:
             main_config[argument] = cmdargs[argument]
 
-    mandatory_args = ['url']
+    if main_config.get('no_book_scraper'):
+        print('Option \'--no_book_scraper\' specified. Argument \'--scraper_output_file\' is now required')
+        mandatory_args.append('scraper_output_file')
+
     for argument in mandatory_args:
         if not main_config.get(argument):
             raise Exception(f'Mandatory argument not provided: <{argument}>')
@@ -55,6 +59,10 @@ def parse_config(main_config):
     except:
         main_config['stylesheet_mobile'] = None
         print(f'WARNING! HTML stylesheet_mobile file not found at \'{stylesheet_mobile_filepath}\'. Resulting .html file may not look pretty.')
+
+    if main_config.get('scraper_output_file'):
+        if not os.path.isfile(main_config['scraper_output_file']):
+            raise Exception(f'Specified Book Scraper output file not found: \'{main_config["scraper_output_file"]}\'')
 
     return main_config
 
