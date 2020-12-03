@@ -1,0 +1,13 @@
+    div {
+        width: auto
+    }
+
+    div.quote {
+        text-align: right;
+        font-style: italic;
+        font-size: 90%;
+    }
+
+    body {
+        font-size: 110%;
+    }

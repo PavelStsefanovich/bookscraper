@@ -1,0 +1,51 @@
+# example:
+# - pattern: '\[\d+\]'
+#   match: 'match[0]'
+#   html_args:
+#     tag: 'html_tag_name'
+#     class_: 'tag_style_value'
+#     div: True
+#     div_style: 'div_style_value'
+
+regex_parsing_list:
+
+- pattern: '@@title\:(.*)'
+  match: 'match[1]'
+  html_args:
+    tag: 'h1'
+    class_: 'title'
+    div: True
+    div_style: 'title'
+
+- pattern: '@@author\:(.*)'
+  match: 'match[1]_hr'
+  html_args:
+    tag: 'h3'
+    class_: 'title'
+    div: True
+    div_style: 'title'
+
+- pattern: '\[\d+\]'
+  match: 'match[0]'
+
+- pattern: '@@(FOOTNOTES)@@'
+  match: 'hr_match[1]'
+  html_args:
+    tag: 'h2'
+    div: True
+    div_style: 'ftnotes_header'
+
+- pattern: '\d+\..*'
+  match: 'hr_match[0]'
+  html_args:
+    tag: 'h3'
+    class_: 'chapter'
+    div: True
+    div_style: 'chapter'
+
+- pattern: '\d+'
+  match: 'match[0]'
+  html_args:
+    tag: 'h6'
+    div: True
+    div_style: 'ftnote'
