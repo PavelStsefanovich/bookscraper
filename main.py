@@ -30,5 +30,5 @@ elif __file__:
 if __name__ == '__main__':
     main_config = config.parse_cmdargs(cmdargs)
     main_config = config.parse_config(main_config)
-    output_file = book_scraper.main(main_config)
-    html_builder.main(output_file)
+    main_config['scraper_output_file'] = book_scraper.main(main_config)
+    html_builder.main(main_config)

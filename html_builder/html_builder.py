@@ -1,26 +1,24 @@
 import os
 import re
 import pyhtml
-from .html_builder_data import regex_parsing_list as rplist
-from .html_builder_data import stylesheet, stylesheet_mobile
 
 
 
 ######## FUNCTIONS ########################################
-def regex_parser(line):
-    for regex in rplist:
+def regex_parser(line, regex_parsing_list):
+    for regex in regex_parsing_list:
         hr = ''
-        m = re.match(regex[0], line)
+        m = re.match(regex['pattern'], line)
         if m:
-            if re.match('^hr_.*', regex[1]):
+            if re.match('^hr_.*', regex['match']):
                 hr = 'pre'
-            if re.match('.*_hr$', regex[1]):
+            if re.match('.*_hr$', regex['match']):
                 hr = 'post'
 
-            if re.match(r'.*match\[0\].*', regex[1]):
-                return (m[0], regex[2], hr)
-            if re.match(r'.*match\[1\].*', regex[1]):
-                return (m[1], regex[2], hr)
+            if re.match(r'.*match\[0\].*', regex['match']):
+                return (m[0], regex['html_args'], hr)
+            if re.match(r'.*match\[1\].*', regex['match']):
+                return (m[1], regex['html_args'], hr)
             # more regex options here
 
     return '', {'tag': 'p'}, None
@@ -70,7 +68,7 @@ def append_body_part(part, body_parts):
     return body_parts
 
 
-def generate_html_body(input_file_path):
+def generate_html_body(input_file_path, regex_parsing_list):
     body_parts = [pyhtml.br]
     current_part = ''
     empty_lines_count = 0
@@ -81,7 +79,7 @@ def generate_html_body(input_file_path):
                 current_part = line
                 continue
 
-            parsed_element = regex_parser(current_part)
+            parsed_element = regex_parser(current_part, regex_parsing_list)
             if len(parsed_element[0]) > 0:
                 empty_lines_count = 0
                 if parsed_element[1].get('tag'):
@@ -99,7 +97,7 @@ def generate_html_body(input_file_path):
                 continue
 
             if empty_lines_count > 0:
-                parsed_element = regex_parser(line)
+                parsed_element = regex_parser(line, regex_parsing_list)
                 if len(parsed_element[0]) > 0:
                     empty_lines_count = 0
                     if parsed_element[1].get('tag'):
@@ -150,21 +148,27 @@ def dump_html(html, input_file_path, mobile=False):
         book.write(html.render())
 
 
-def main(input_file_path):
+def main(main_config):
     print('Generating html')
-    body = generate_html_body(input_file_path)
+    input_file_path = main_config['scraper_output_file']
+    regex_parsing_list = main_config['parser_config'].get('regex_parsing_list')
+    if not regex_parsing_list:
+        regex_parsing_list = {}
+    
+    ## html body
+    body = generate_html_body(input_file_path, regex_parsing_list)
 
     ## normal html
     print('Generating html head')
     book_title = re.sub(r'\.\w+$', '', os.path.split(input_file_path)[1])
-    head = generate_html_head(book_title, stylesheet)
+    head = generate_html_head(book_title, main_config['stylesheet'])
     html = pyhtml.html(head, body)
     dump_html(html, input_file_path)
 
     ## mobile-friendly html
     print('Generating html head (mobile)')
     book_title = book_title + ' (mobile)'
-    head = generate_html_head(book_title, stylesheet_mobile)
+    head = generate_html_head(book_title, main_config['stylesheet_mobile'])
     html = pyhtml.html(head, body)
     dump_html(html, input_file_path, mobile=True)
 
@@ -172,6 +176,4 @@ def main(input_file_path):
 
 ######## MAIN #############################################
 if __name__ == '__main__':
-    #TODO remove
-    #main(r'E:\WORKSHOP\Python\BookScraper\Габриэль Гарсиа Маркес @ Сто лет одиночества.txt')
-    main('not_defined')
+    main({})
