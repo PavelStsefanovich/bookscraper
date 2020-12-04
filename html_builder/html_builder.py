@@ -1,6 +1,6 @@
 import os
-import re
 import pyhtml
+import re
 
 
 
@@ -92,9 +92,11 @@ def generate_html_body(input_file_path, regex_parsing_list):
                 empty_lines_count = 0
                 if parsed_element[1].get('tag'):
                     if parsed_element[2] == 'pre':
+                        body_parts.append(pyhtml.br)
                         body_parts.append(pyhtml.hr)
                     body_parts = append_body_part(parsed_element, body_parts)
                     if parsed_element[2] == 'post':
+                        body_parts.append(pyhtml.br)
                         body_parts.append(pyhtml.hr)
                     current_part = ''
                 else:
@@ -111,9 +113,11 @@ def generate_html_body(input_file_path, regex_parsing_list):
                     if parsed_element[1].get('tag'):
                         body_parts = append_body_part(current_part, body_parts)
                         if parsed_element[2] == 'pre':
+                            body_parts.append(pyhtml.br)
                             body_parts.append(pyhtml.hr)
                         body_parts = append_body_part(parsed_element, body_parts)
                         if parsed_element[2] == 'post':
+                            body_parts.append(pyhtml.br)
                             body_parts.append(pyhtml.hr)
                         current_part = ''
                     else:
