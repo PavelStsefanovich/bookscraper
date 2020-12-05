@@ -15,18 +15,22 @@ def regex_parser(line, regex_parsing_list):
             if re.match('.*_hr$', regex['match']):
                 hr = 'post'
 
+            html_args = regex.get('html_args')
+            if not html_args:
+                html_args = {}
+
             if re.match(r'.*match\[0\].*', regex['match']):
-                return (m[0], regex['html_args'], hr)
+                return (m[0], html_args, hr)
             if re.match(r'.*match\[1\].*', regex['match']):
-                return (m[1], regex['html_args'], hr)
+                return (m[1], html_args, hr)
             if re.match(r'.*match\[2\].*', regex['match']):
-                return (m[2], regex['html_args'], hr)
+                return (m[2], html_args, hr)
             if re.match(r'.*match\[3\].*', regex['match']):
-                return (m[3], regex['html_args'], hr)
+                return (m[3], html_args, hr)
             if re.match(r'.*match\[4\].*', regex['match']):
-                return (m[4], regex['html_args'], hr)
+                return (m[4], html_args, hr)
             if re.match(r'.*match\[5\].*', regex['match']):
-                return (m[5], regex['html_args'], hr)
+                return (m[5], html_args, hr)
             # more regex options here
 
     return '', {'tag': 'p'}, None
