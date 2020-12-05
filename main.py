@@ -57,7 +57,7 @@ if __name__ == '__main__':
         if keyboard_input == 'open':
             proc = Popen(['explorer', '.'], shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
 
-    except Exception as e
+    except Exception as e:
         print('\n(!) ERROR:')
         print(e)
         keyboard_input = input('\n>> Press <Enter> to exit: ')
