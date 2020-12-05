@@ -5,7 +5,6 @@ from ruamel.yaml import YAML
 
 ######## FUNCTIONS ########################################
 def parse_cmdargs(cmdargs):
-    mandatory_args = ['url']
     yaml=YAML(typ='safe')
     mainconfig_filepath = cmdargs['params_file']
     if not os.path.isabs(mainconfig_filepath):
@@ -23,7 +22,9 @@ def parse_cmdargs(cmdargs):
 
     if main_config.get('no_book_scraper'):
         print('Option \'--no_book_scraper\' specified. Argument \'--scraper_output_file\' is now required')
-        mandatory_args.append('scraper_output_file')
+        mandatory_args = ['scraper_output_file']
+    else:
+        mandatory_args = ['url']
 
     for argument in mandatory_args:
         if not main_config.get(argument):
