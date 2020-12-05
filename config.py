@@ -21,7 +21,6 @@ def parse_cmdargs(cmdargs):
             main_config[argument] = cmdargs[argument]
 
     if main_config.get('no_book_scraper'):
-        print('Option \'--no_book_scraper\' specified. Argument \'--scraper_output_file\' is now required')
         mandatory_args = ['scraper_output_file']
     else:
         mandatory_args = ['url']
