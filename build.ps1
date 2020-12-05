@@ -9,13 +9,12 @@ try {
     & pipenv run pyinstaller -F -i config/bookscraper.ico -n BookScraper main.py
     cp params.yml dist
     cp config dist -recurse
-    rm dist/config/*.ico
-    write "BUILD SUCCESSFUL"
+    rm dist/config/*.ico    
 }
 catch {
-    write "BUILD FAILED"
     throw $_
 }
 finally {
+    write "BUILD FINISHED"
     cd $current_location
 }
