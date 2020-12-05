@@ -33,25 +33,31 @@ elif __file__:
 
 ######## MAIN #############################################
 if __name__ == '__main__':
-    main_config = config.parse_cmdargs(cmdargs)
-    main_config = config.parse_config(main_config)
+    try:
+        main_config = config.parse_cmdargs(cmdargs)
+        main_config = config.parse_config(main_config)
 
-    if not main_config.get('no_book_scraper'):
-        main_config['scraper_output_file'] = book_scraper.main(main_config)
+        if not main_config.get('no_book_scraper'):
+            main_config['scraper_output_file'] = book_scraper.main(main_config)
 
-    main_config['html_builder_output_files'] = html_builder.main(main_config)
+        main_config['html_builder_output_files'] = html_builder.main(main_config)
 
-    ## pause before proceeding
-    keyboard_input = input('\n>> Press <Enter> to proceed to pdf_builder (enter "stop" to exit): ')
-    if keyboard_input == 'stop':
-        main_config['no_pdf_builder'] = True
+        ## pause before proceeding
+        keyboard_input = input('\n>> Press <Enter> to proceed to pdf_builder (enter "stop" to exit): ')
+        if keyboard_input == 'stop':
+            main_config['no_pdf_builder'] = True
 
-    if not main_config.get('no_pdf_builder'):
-        main_config['pdf_builder_output_files'] = pdf_builder.main(main_config)
+        if not main_config.get('no_pdf_builder'):
+            main_config['pdf_builder_output_files'] = pdf_builder.main(main_config)
 
-    ## display result
-    print(f'\nFiles generated in directory \'{os.getcwd()}\'')
-    print('\n>> Type "open" to open this directory in file explorer')
-    keyboard_input = input('>> Press <Enter> to exit: ')
-    if keyboard_input == 'open':
-        proc = Popen(['explorer', '.'], shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
+        ## display result
+        print(f'\nFiles generated in directory \'{os.getcwd()}\'')
+        print('\n>> Type "open" to open this directory in file explorer')
+        keyboard_input = input('>> Press <Enter> to exit: ')
+        if keyboard_input == 'open':
+            proc = Popen(['explorer', '.'], shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
+
+    except Exception as e
+        print('\n(!) ERROR:')
+        print(e)
+        keyboard_input = input('\n>> Press <Enter> to exit: ')
