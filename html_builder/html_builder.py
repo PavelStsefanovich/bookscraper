@@ -178,14 +178,14 @@ def main(main_config):
     book_title = re.sub(r'\.\w+$', '', os.path.split(input_file_path)[1])
     head = generate_html_head(book_title, main_config['stylesheet'])
     html = pyhtml.html(head, body)
-    output_files.append(dump_html(html, input_file_path))
+    output_files.append((dump_html(html, input_file_path), main_config['stylesheet_filepath']))
 
     ## mobile-friendly html
     print('Generating html head (mobile)')
     book_title = book_title + ' (mobile)'
     head = generate_html_head(book_title, main_config['stylesheet_mobile'])
     html = pyhtml.html(head, body)
-    output_files.append(dump_html(html, input_file_path, mobile=True))
+    output_files.append((dump_html(html, input_file_path, mobile=True), main_config['stylesheet_mobile_filepath']))
 
     return output_files
 
