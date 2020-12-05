@@ -5,6 +5,7 @@ import sys
 from book_scraper import book_scraper
 from html_builder import html_builder
 from pdf_builder import pdf_builder
+from subprocess import Popen
 
 
 
@@ -41,14 +42,16 @@ if __name__ == '__main__':
     main_config['html_builder_output_files'] = html_builder.main(main_config)
 
     ## pause before proceeding
-    keyboard_input = input('\nPress <Enter> to proceed to pdf_builder (enter "stop" to exit) ')
+    keyboard_input = input('\n>> Press <Enter> to proceed to pdf_builder (enter "stop" to exit): ')
     if keyboard_input == 'stop':
         main_config['no_pdf_builder'] = True
 
     if not main_config.get('no_pdf_builder'):
         main_config['pdf_builder_output_files'] = pdf_builder.main(main_config)
 
-    # print(main_config)
-    #TODO: display all resulting files (or directory)
-    keyboard_input = input('\nPress <Enter> to exit ')
-    #TODO: add open explorer in the end
+    ## display result
+    print(f'\nFiles generated in directory \'{os.getcwd()}\'')
+    print('\n>> Type "open" to open this directory in file explorer')
+    keyboard_input = input('>> Press <Enter> to exit: ')
+    if keyboard_input == 'open':
+        proc = Popen(['explorer', '.'], shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
