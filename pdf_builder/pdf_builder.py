@@ -25,13 +25,17 @@ def main(main_config):
 
         # create intermediate files and run pdfkit
         # intermediate files used as workaround for non-ascii character in path that are not supported by pdfkit
-        print(f'Printing to PDF: \'{input_file_pair[0]}\'')
+        print(f'Printing to .pdf: \'{input_file_pair[0]}\'')
         copyfile(input_file_pair[0], intermediate_input_file_path)
-        pdfkit.from_file(intermediate_input_file_path, intermediate_output_file_path, options=options, css=css)
-        copyfile(intermediate_output_file_path, output_file_path)
-        output_files.append(output_file_path)
-        os.remove(intermediate_input_file_path)
-        os.remove(intermediate_output_file_path)
+        try:
+            pdfkit.from_file(intermediate_input_file_path, intermediate_output_file_path, options=options, css=css)
+            copyfile(intermediate_output_file_path, output_file_path)
+            output_files.append(output_file_path)
+        except:
+            print(f'Print to .pdf FAILED for file \'{input_file_pair[0]}\'')
+        finally:
+            os.remove(intermediate_input_file_path)
+            os.remove(intermediate_output_file_path)
 
     return output_files
 
