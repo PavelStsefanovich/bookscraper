@@ -7,14 +7,14 @@
         font-style: italic;
         font-size: 90%;
     }
-
+	
     div.quote_author {
         text-align: right;
         font-style: italic;
-        font-weight: bold;
+	font-weight: bold;
         font-size: 90%;
     }
 
     body {
-        font-size: 175%;
+        font-size: 225%;
     }

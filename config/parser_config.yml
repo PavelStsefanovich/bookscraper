@@ -24,6 +24,12 @@ regex_parsing_list:
     class_: 'title'
     div: True
     div_style: 'title'
+    
+- pattern: '@@br_hr\:(.*)'
+  match: 'match[1]_hr'
+  html_args:
+    tag: 'p'
+    div: True
 
 - pattern: '\[\d+\]'
   match: 'match[0]'
