@@ -13,6 +13,8 @@ def parse_cmdargs(cmdargs):
     try:
         with open(mainconfig_filepath, 'r', encoding='UTF-8') as file:
             main_config = yaml.load(file)
+            if not main_config:
+                main_config = {}
     except:
         main_config = {}
 
