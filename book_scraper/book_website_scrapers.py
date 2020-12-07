@@ -113,10 +113,11 @@ def scrape_loveread(metadata, cmdargs):
             print(f'(!) Failed to parse: {url}')
             text = f'\n!!!!! PAGE {str(page)} is skipped !!!!!\n'
         else:
-            text = helpers.search_soup(
+            text = helpers.search_soup_complex(
                 soup=soup,
                 search_tag=metadata["book_text_search_tag"],
-                search_class=metadata["book_text_search_class"]
+                search_class=metadata["book_text_search_class"],
+                embedded_tags=metadata["embedded_tags"]
             )
 
         with open(out_file,'a', encoding="utf-8") as book:

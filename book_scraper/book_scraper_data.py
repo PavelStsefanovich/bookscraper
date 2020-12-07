@@ -13,6 +13,9 @@ known_book_websites = {
         'book_note_numbers_search_tag': 'p',
         'book_note_numbers_search_class': 'prm',
         'book_navigation_panel_search_tag': 'div',
-        'book_navigation_panel_search_class': 'navigation'
+        'book_navigation_panel_search_class': 'navigation',
+        'embedded_tags': [
+            ('div','take_h1','@@chapter:')
+        ]
     }
 }
