@@ -31,6 +31,14 @@ regex_parsing_list:
     tag: 'p'
     div: True
 
+- pattern: '@@chapter\:(.*)'
+  match: 'hr_match[1]'
+  html_args:
+    tag: 'h3'
+    class_: 'chapter'
+    div: True
+    div_style: 'chapter'
+
 - pattern: '\[\d+\]'
   match: 'match[0]'
 
