@@ -62,3 +62,4 @@ if __name__ == '__main__':
         print('\n(!) ERROR:')
         print(e)
         keyboard_input = input('\n>> Press <Enter> to exit: ')
+        raise
