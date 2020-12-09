@@ -6,6 +6,10 @@
         width: auto
     }
 
+    div.title {
+        text-align: center;
+    }
+
     div.quote {
         text-align: right;
         font-style: italic;
@@ -17,4 +21,26 @@
         font-style: italic;
         font-weight: bold;
         font-size: 90%;
+    }
+
+    div.part {
+        text-align: center;
+    }
+
+    div.chapter {
+        text-align: center;
+    }
+
+    div.disclaimer {
+        font-size: 80%;
+    }
+
+    div.poem {
+        font-size: 90%;
+        font-style: italic;
+        padding: 15px;
+    }
+
+    p.bold {
+        font-weight: bold;
     }
